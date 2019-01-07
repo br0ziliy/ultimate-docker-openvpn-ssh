@@ -86,6 +86,17 @@ If you'd like to perform additional actions **inside** the container - create
 any commands you'd like to run there. The file can be a bash or Python script,
 or even a compiled binary.
 
+This bash snippet for example adds additional options to /etc/resolv.conf after
+the connection is made:
+
+```
+#!/bin/bash
+
+DOMAIN=$(awk '/domain / {print $2}' /etc/resolv.conf)
+echo "search ${DOMAIN}" >> /etc/resolv.conf
+echo "options ndots:2" >> /etc/resolv.conf
+```
+
 Why shell?
 ----------
 
