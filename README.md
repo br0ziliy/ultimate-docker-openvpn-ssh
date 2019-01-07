@@ -66,6 +66,14 @@ Host *.secret-domain-behind-vpn.com
 
 Now all the ssh connections to `*.secret-domain-behind-vpn.com` will be going through container.
 
+If you have to authenticate against an SSH jumphost when connected to VPN - just
+append it's name to `ProxyJump` directive, like this:
+`ProxyJump docker-vpn,user@some.jumphost.secret-domain-behind-vpn.com` - SSH
+will first authenticate to your container SSH, then to the jumphost SSH and then
+finally - against your target SSH server you're trying to reach. This feature
+might not work wit holder SSH clients, see
+[this link](https://en.wikibooks.org/wiki/OpenSSH/Cookbook/Proxies_and_Jump_Hosts#Jump_Hosts_--_Passing_Through_a_Gateway_or_Two) for details.
+
 If you'd like to debug the container - supply `--env DVPN_DEBUG=true` parameter
 to `docker run` - this will give you shell inside the container without
 connecting to the VPN or starting the SSH daemon.
