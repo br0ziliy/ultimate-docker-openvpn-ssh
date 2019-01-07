@@ -4,7 +4,7 @@ LABEL maintainer="Vasyl Kaigorodov <vkaygorodov@gmail.com>"
 LABEL version="latest"
 LABEL description="Ultimate Docker container with OpenVPN client and SSH daemon"
 
-RUN apk add --update bash openvpn openssh openssh-keygen && \
+RUN apk add --update bash openvpn openssh openssh-keygen bind-tools && \
     adduser tunnel -D && \
     mkdir /vpn_configs && \
     mkdir /root/.ssh && \
