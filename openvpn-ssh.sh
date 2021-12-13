@@ -33,14 +33,16 @@ echo "OpenVPN config in use: "${DVPN_CONFIG_FNAME}
     --script-security 2 \
     --up /etc/openvpn/up.sh \
     --down /etc/openvpn/down.sh
+# Give OpenVPN time to connect:
+sleep 3
 
 # Wait for connection, bailing out if it fails:
 i=0
 echo
 while :;do
-    [ $i -gt 60 ] && { echo "Could not connect"; cat /var/log/openvpn.log; exit 1; }
+    [ $i -gt 60 ] && { echo "Could not connect - timeout"; cat /var/log/openvpn.log; exit 1; }
     # Check if OpenVPN process exist; if it's not - we're done:
-    ps axfuww | grep -q /usr/sbin/[o]penvpn || { echo "Could not connect"; cat /var/log/openvpn.log; exit 1; }
+    ps axfuww | grep -q /usr/sbin/[o]penvpn || { echo "Could not connect - no OpenVPN process found"; ps axfuww; cat /var/log/openvpn.log; exit 1; }
     # ... the process might exist, but there might be problem with creating
     # tunnel and setting it up - check it here:
     ip r get 1.2.3.4 | grep -q tun && break
