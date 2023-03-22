@@ -22,4 +22,4 @@ COPY authorized_keys /etc/authorized_keys/tunnel
 EXPOSE 22
 ENV DVPN_CONFIG "default"
 ENV DVPN_DEBUG ""
-ENTRYPOINT ["/openvpn-ssh.sh"]
+ENTRYPOINT ["bash", "/openvpn-ssh.sh"]
